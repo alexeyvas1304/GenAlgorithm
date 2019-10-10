@@ -1,7 +1,7 @@
 import random
 
 def roulette_wheel (population,fitnesses):
-    probabilities = [fitnesses[i]/sum(fitnesses) for i in range(len(fitnesses))] # придумать что-то лучше
+    probabilities = [fitnesses[i]/sum(fitnesses) for i in range(len(fitnesses))] # придумать что-то получше
     for i in range(1,len(probabilities)):
         probabilities[i]+=probabilities[i-1]
     c1 = random.random()
