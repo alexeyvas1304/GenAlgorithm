@@ -9,7 +9,13 @@ def elite (population, fitness_one,d):
 
 def exclusion(population, fitness_one, dictionary):
     size = dictionary["size_of_population"]
-    return list(dict.fromkeys(sorted(population, key=lambda individual: fitness_one(individual), reverse=True)))[:size]
+    result = []
+    population.sort(key=lambda osob: fitness_one(osob), reverse=True)
+    for individual in population:
+        if individual not in result:
+            result.append(individual)
+    result.append(population)
+    return result[:size]
 
 
 def trunc(population, fitness_one, dictionary):
