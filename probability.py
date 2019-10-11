@@ -17,3 +17,20 @@ def probability(number, ret_er=False):
         if ret_er:
             return "Error"
         return probability(input())
+    
+def threshold(number, ret_er=False):
+    number = real(number, ret_er)
+    if number == "Error" and ret_er:
+        return "Error"
+    if 0 < number <= 1:
+        return number
+    else:
+        print()
+        if number <= 0:
+            print("Error: {} <= 0".format(number))
+        else:
+            print("Error: {} > 1".format(number))
+        print("Повторите ввод")
+        if ret_er:
+            return "Error"
+        return probability(input())

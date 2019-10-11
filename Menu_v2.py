@@ -2,7 +2,7 @@
 import time
 
 from number_types import real, positive, natural
-from probability import probability
+from probability import probability, threshold
 from check_filename import check_filename
 from list_options import menu_list, check_user_choice, print_menu
 
@@ -18,14 +18,15 @@ class Menu_of_classic_genetic_algorithm:
                                    {"parent_selection_type": "roulette_wheel", "type": ["roulette_wheel",                                                          "inbriding_phenotype","inbriding_genotype","panmixy"]},
                                    {"cross_type": "one_point", "type": ["one_point"]},
                                    {"p_cross": 0.8, "type": "probability"},
-                                   {"mutation_type": "simple", "type": ["simple"]},
+                                   {"mutation_type": "binary", "type": ["binary"]},
                                    {"p_mutation": 0.1, "type": "probability"},
-                                   {"select_new_population_type":"elite","type":["elite"]},
+                                   {"select_new_population_type":"elite","type":["elite","trunc","exclusion"]},
                                    {"size_of_population": 30, "type": "natural"}]
 
             self.functions_for_type = {"float": float, "int": int, "str": str,
-                                       "probability": probability, "positive": positive,
-                                       "natural": natural, "real": real, "filename": check_filename}
+                                       "probability": probability, "threshold": threshold,
+                                       "positive": positive,"natural": natural, "real": real,
+                                       "filename": check_filename}
 
             self.unpack_common_options()
 
