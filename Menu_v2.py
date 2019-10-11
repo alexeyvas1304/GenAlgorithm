@@ -21,6 +21,7 @@ class Menu_of_classic_genetic_algorithm:
                                    {"mutation_type": "simple", "type": ["simple"]},
                                    {"p_mutation": 0.1, "type": "probability"},
                                    {"select_new_population_type":"elite","type":["elite"]},
+                                   {"trunc_threshold": 0.7, "type": "probability"},
                                    {"size_of_population": 30, "type": "natural"}]
 
             self.functions_for_type = {"float": float, "int": int, "str": str,
