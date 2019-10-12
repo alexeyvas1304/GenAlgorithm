@@ -52,6 +52,6 @@ def inbriding_genotype(population,fitnesses):
 
     
 def panmixy(population,fitnesses):
-    parent1 = random.randint(0,len(fitnesses)-1)
-    parent2 = random.randint(0,len(fitnesses)-1)
+    parent1 = random.randint(0,len(population)-1)
+    parent2 = random.randint(0,len(population)-1)
     return [parent1, parent2]

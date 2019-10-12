@@ -1,5 +1,6 @@
 # import pandas as pd
 import time
+import copy
 
 from number_types import real, positive, natural
 from probability import probability, threshold
@@ -11,7 +12,7 @@ class Menu_of_classic_genetic_algorithm:
 
     def __init__(self, task_dict):
         try:
-            self.task_dict = task_dict
+            self.task_dict = copy.deepcopy(task_dict)
 
             self.common_options = [{"n_iter": 30, "type": "natural"}, {"eps": 0.0001, "type": "positive"},
                                    {"fitness_all_type": "average", "type": [ "average","maximum", "minimum"]},
@@ -22,6 +23,7 @@ class Menu_of_classic_genetic_algorithm:
                                    {"p_mutation": 0.1, "type": "probability"},
                                    {"select_new_population_type":"elite","type":["elite","trunc","exclusion"]},
                                    {"size_of_population": 30, "type": "natural"}]
+            
 
             self.functions_for_type = {"float": float, "int": int, "str": str,
                                        "probability": probability, "threshold": threshold,
@@ -41,6 +43,7 @@ class Menu_of_classic_genetic_algorithm:
 
             self.task_dict_full = self.task_dict
             self.task_dict_full["options"] = self.common_options + self.task_dict_full["options"]
+
 
             time.sleep(1)
 
@@ -76,7 +79,7 @@ class Menu_of_classic_genetic_algorithm:
                            "(hint: файл должен находиться в текущей директории):").format(option_key)
             elif isinstance(type_of_data, list):
                 dict_with_options = menu_list(type_of_data)
-                message = "Выберете '{}'\n(hint: нужно ввести номер варианта):\n".format(option_key) + \
+                message = "Выберите '{}'\n(hint: нужно ввести номер варианта):\n".format(option_key) + \
                           print_menu(dict_with_options)
             else:
                 message = "Введите '{}':".format(option_key)
@@ -126,6 +129,7 @@ class Menu_of_classic_genetic_algorithm:
             print("-" * 22)
 
             print()
+            
 
         return None
 
@@ -138,7 +142,7 @@ class Menu_of_classic_genetic_algorithm:
         return None
 
     def unpack_common_options(self):
-        self.dict_common_options = {}
+        self.dict_common_options = {} 
         for option in self.common_options:
             option_key = list(option.keys())[0]
             option_value = option[option_key]
