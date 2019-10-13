@@ -1,8 +1,12 @@
-def minimum(population,fitness_one):
-    return min(fitness_one(osob) for osob in population)
+def minimum(fitnesses):
+    return min(fitnesses)
 
-def maximum(population,fitness_one):
-    return max(fitness_one(osob) for osob in population)
+def maximum(fitnesses):
+    return max(fitnesses)
 
-def average(population,fitness_one):
-    return sum(fitness_one(osob) for osob in population)/len(population)
+def average(fitnesses):
+    return sum(fitnesses)/len(fitnesses)
+
+
+# def average(population,fitness_one):
+#     return sum(fitness_one(osob) for osob in population)/len(population)
