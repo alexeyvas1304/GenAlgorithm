@@ -37,7 +37,8 @@ def inbriding_phenotype(population,fitnesses):
     return [parent1,parent2]
 
 
-def inbriding_genotype(population,fitnesses):
+# Выбор родителей
+def inbriding_genotype(population, fitnesses):
     parent1 = random.randint(0,len(population)-1)
     min_abs_diff = float("Inf")
     for i in range (len(fitnesses)):
@@ -48,8 +49,23 @@ def inbriding_genotype(population,fitnesses):
                 parent2 = i
     return [parent1,parent2]
 
-# С аутбридингом аналогично
+def outbriding_genotype(population, fitnesses):
+    parent1 = random.randint(0,len(population)-1)
+    max_abs_diff = 0
+    for i in range (len(fitnesses)):
+        if i != parent1:
+            diff = abs(fitnesses[parent1] - fitnesses[i])
+            if diff > max_abs_diff:
+                max_abs_diff = diff
+                parent2 = i
+    return [parent1, parent2]
 
+def choose_parent_nn(population, fitnesses, i, dictionary):
+    if (i+1) % dictionary['outbreed_freq'] == 0:
+        return outbriding_genotype(population, fitnesses)
+    else:
+        return inbriding_genotype(population, fitnesses)
+    
     
 def panmixy(population,fitnesses):
     parent1 = random.randint(0,len(population)-1)

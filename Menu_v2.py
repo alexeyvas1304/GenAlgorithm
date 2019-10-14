@@ -6,29 +6,33 @@ from number_types import real, positive, natural
 from probability import probability, threshold
 from check_filename import check_filename
 from list_options import menu_list, check_user_choice, print_menu
+from read_dataset import read_dataset
 
 
+    
 class Menu_of_classic_genetic_algorithm:
 
     def __init__(self, task_dict):
         try:
             self.task_dict = copy.deepcopy(task_dict)
 
-            self.common_options = [{"n_iter": 30, "type": "natural"}, {"eps": 0.0001, "type": "positive"},
+            self.common_options = [{"n_iter": 30, "type": "natural"}, 
+                                   {"eps": 0.0001, "type": "positive"},
                                    {"fitness_all_type": "average", "type": [ "average","maximum", "minimum"]},
-                                   {"parent_selection_type": "roulette_wheel", "type": ["roulette_wheel",                                                          "inbriding_phenotype","inbriding_genotype","panmixy"]},
-                                   {"cross_type": "one_point", "type": ["one_point"]},
+                                   {"parent_selection_type": "roulette_wheel", "type": ["roulette_wheel",                                                          "inbriding_phenotype","inbriding_genotype","panmixy", "choose_parent_nn"]},
+                                   {"cross_type": "one_point", "type": ["one_point", "discret_recombination_nn"]},
                                    {"p_cross": 0.8, "type": "probability"},
-                                   {"mutation_type": "binary", "type": ["binary"]},
+                                   {"mutation_type": "binary", "type": ["binary", "mutation_nn"]},
                                    {"p_mutation": 0.1, "type": "probability"},
-                                   {"select_new_population_type":"elite","type":["elite","trunc","exclusion"]},
+                                   {"select_new_population_type":"elite","type":["elite","trunc","exclusion","selection_nn"]},
                                    {"size_of_population": 30, "type": "natural"}]
             
 
             self.functions_for_type = {"float": float, "int": int, "str": str,
                                        "probability": probability, "threshold": threshold,
                                        "positive": positive,"natural": natural, "real": real,
-                                       "filename": check_filename}
+                                       "filename": check_filename,
+                                       "dataset": read_dataset}
 
             self.unpack_common_options()
 
@@ -44,13 +48,13 @@ class Menu_of_classic_genetic_algorithm:
             self.task_dict_full = self.task_dict
             self.task_dict_full["options"] = self.common_options + self.task_dict_full["options"]
 
-
             time.sleep(1)
 
             self.input_data()
             print("SUCCESSFUL")
             self.unpack_options()
             self.unpack_task_with_options()
+            
         except Exception:
             print("Что-то пошло не так ...")
 
@@ -65,6 +69,7 @@ class Menu_of_classic_genetic_algorithm:
         return None
 
     def input_data(self):
+        
         dict_with_options = None
         for option in range(len(self.task_dict_full["options"])):
             option_key = list(self.task_dict_full["options"][option].keys())[0]
@@ -100,6 +105,7 @@ class Menu_of_classic_genetic_algorithm:
                 else:
                     self.task_dict_full["options"][option][option_key] = function(input_data)
                 print(self.task_dict_full["options"][option][option_key])
+                
             elif input_data == "":
                 if isinstance(type_of_data, list):
                     input_data = self.task_dict_full["options"][option][option_key]
@@ -159,20 +165,27 @@ class Menu_of_classic_genetic_algorithm:
 
     """                            
     def read_dataset(self, filename):
-        full_file_path = "./" + filename
-        try:
-            dataset = pd.read_csv(full_file_path)
-        except FileNotFoundError:
+    
+        if filename=="":
             print()
             print("Файл не найден! Попробуйте еще раз!")
             filename = input()
             return self.read_dataset(filename)
+        else:    
+            full_file_path = "./" + filename
+            try:
+                dataset = pd.read_csv(full_file_path)
+            except FileNotFoundError:
+                print()
+                print("Файл не найден! Попробуйте еще раз!")
+                filename = input()
+                return self.read_dataset(filename)
 
-        pd.options.display.max_columns = 5
-        pd.options.display.max_rows = 5
+            pd.options.display.max_columns = 5
+            pd.options.display.max_rows = 5
 
-        print()
-        print(dataset.head())
+            print()
+            print(dataset.head())
 
         return dataset
 
