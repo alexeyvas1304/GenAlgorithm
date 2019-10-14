@@ -22,6 +22,7 @@ def generate (d):
 def fitness_one (d,osob):
     dataset = d['dataset']
     data = pd.read_csv(dataset, index_col= 0)
+    tmp = data.shape[1]-1
     slicer = []
     for i in range (len(osob)):
         if osob[i] ==1:
@@ -30,7 +31,8 @@ def fitness_one (d,osob):
     X_train,X_test,y_train,y_test = train_test_split (data.drop(columns = 'target'),data['target'],test_size = 0.3,random_state = 42)
     clf = LogisticRegression(random_state=0, solver='lbfgs',multi_class='multinomial').fit(X_train, y_train)
     y_pred_test = clf.predict(X_test)
-    return accuracy_score(y_test,y_pred_test)
+    #print(accuracy_score(y_test,y_pred_test),'-',1/(tmp-sum(osob)))
+    return accuracy_score(y_test,y_pred_test)- 1/(tmp-sum(osob))
 
 def validation(d,osob):
     if osob is None or max(osob) == 0:
