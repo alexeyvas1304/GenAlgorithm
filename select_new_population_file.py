@@ -21,8 +21,9 @@ def trunc(population, fitnesses, dictionary):
     result_pop = []
     result_fit = []
     for i in range(size):
-        result_pop.append(random.choice(d)[1])
-        result_fit.append(random.choice(d)[0])
+        temp = random.choice(d)
+        result_pop.append(temp[1])
+        result_fit.append(temp[0])
     return [result_pop,result_fit]
 
 
